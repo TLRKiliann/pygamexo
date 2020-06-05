@@ -6,7 +6,6 @@ Note there are comments here, but for the full explanation,
 follow along in the tutorial.
 """
 
-
 # Import Modules
 import os
 import pygame as pg
@@ -18,12 +17,12 @@ if not pg.mixer:
     print("Warning, sound disabled")
 
 main_dir = os.path.split(os.path.abspath(__file__))[0]
-data_dir = os.path.join(main_dir, "data")
+data_dir = os.path.join(main_dir, "img")
 
 
 # functions to create our resources
 def load_image(name, colorkey=None):
-    fullname = os.path.join(data_dir, name)
+    fullname = os.path.join("./img", name)
     try:
         image = pg.image.load(fullname)
     except pg.error:
@@ -44,11 +43,11 @@ def load_sound(name):
 
     if not pg.mixer or not pg.mixer.get_init():
         return NoneSound()
-    fullname = os.path.join(data_dir, name)
+    fullname = os.path.join('./audio', name)
     try:
         sound = pg.mixer.Sound(fullname)
     except pg.error:
-        print("Cannot load sound: %s" % fullname)
+        print("Cannot load sound: ", fullname)
         raise SystemExit(str(geterror()))
     return sound
 
@@ -158,8 +157,10 @@ def main():
 
     # Prepare Game Objects
     clock = pg.time.Clock()
+
     whiff_sound = load_sound("whiff.wav")
     punch_sound = load_sound("punch.wav")
+
     chimp = Chimp()
     fist = Fist()
     allsprites = pg.sprite.RenderPlain((fist, chimp))
@@ -193,10 +194,7 @@ def main():
 
     pg.quit()
 
-
 # Game Over
-
-
 # this calls the 'main' function when this script is executed
 if __name__ == "__main__":
     main()

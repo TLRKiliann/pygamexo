@@ -126,3 +126,36 @@ if pygame.font:
     text = font.render("Pummel The Chimp, And Win $$$", 1, (10, 10, 10))
     textpos = text.get_rect(centerx=background.get_width()/2)
     background.blit(text, textpos)
+
+screen.blit(background, (0, 0))
+pygame.display.flip()
+
+whiff_sound = load_sound('whiff.wav')
+punch_sound = load_sound('punch.wav')
+chimp = Chimp()
+fist = Fist()
+allsprites = pygame.sprite.RenderPlain((fist, chimp))
+clock = pygame.time.Clock()
+
+while 1:
+    clock.tick(60)
+
+for event in pygame.event.get():
+    if event.type == QUIT:
+        return
+    elif event.type == KEYDOWN and event.key == K_ESCAPE:
+        return
+    elif event.type == MOUSEBUTTONDOWN:
+        if fist.punch(chimp):
+            punch_sound.play() #frappé
+            chimp.punched()
+        else:
+            whiff_sound.play() #raté
+    elif event.type == MOUSEBUTTONUP:
+        fist.unpunch()
+
+allsprites.update()
+
+screen.blit(background, (0, 0))
+allsprites.draw(screen)
+pygame.display.flip()

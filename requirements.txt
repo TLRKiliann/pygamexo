@@ -4,4 +4,4 @@ charset-normalizer==2.0.10
 idna==2.9
 pygame==1.9.6
 requests==2.27.1
-urllib3==1.25.9
+urllib3==1.26.5
